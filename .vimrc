@@ -9,7 +9,7 @@ set colorcolumn=+1,+21 " relative (to textwidth) columns to highlight "
 syn match tab display "\t"
 hi link tab Error
 " set csto=1
-set autoindent
+" set autoindent
 set smartindent " return ending brackets to proper locations
 set paste
 set wrap " turn on visual word wrapping
@@ -43,23 +43,7 @@ match ErrorMsg /\s\+$\| \+\ze\t/
 " Enable incremental search.
 set incsearch
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'ctrlpvim/ctrlp.vim'
-Bundle 'phleet/vim-arcanist'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
 filetype plugin indent on    " required
-" ctrl-p config
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 'ra'
-
 if has("cscope")
   set csprg=/usr/bin/cscope
   set csto=0
@@ -115,3 +99,15 @@ inoremap <Up>    <NOP>
 inoremap <Down>  <NOP>
 inoremap <Left>  <NOP>
 inoremap <Right> <NOP>
+
+" plugins
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+set rtp+=/usr/local/opt/fzf
+call plug#begin('~/.vim/plugged')
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+call plug#end()

@@ -1,57 +1,117 @@
-# master.zshrc is meant to be sourced by all zsh users so be careful
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+  export ZSH=~/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+alias vim="nvim"
+alias vimdiff="nvim -d"
+alias tmux-new="tmux -CC"
+alias tmux-attach="tmux -CC a"
+alias did="vim +'normal Go' +'r!date' ~/did.txt"
+export EDITOR=vim
+export VISUAL=vim
+export HG_REAL_BIN=/bin/hg.real
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git
+  command-time
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
 #
-# if you are looking instead at ~/.zshrc then do whatever you want!
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Enable Vi key bindings
+set -o vi
+bindkey "^R" history-incremental-pattern-search-backward
 
-# please uncomment these two lines in your personal ~/.zshrc:
-#export LOCAL_ADMIN_SCRIPTS=/usr/facebook/ops/rc
-#source "$LOCAL_ADMIN_SCRIPTS"/master.zshrc
+# If command execution time above min. time, plugins will not output time.
+ZSH_COMMAND_TIME_MIN_SECONDS=5
 
-# this keeps you up-to-date with the latest master.zshrc changes; if you opt
-# not to, you'll be on your own for keeping up with general changes
+# Message to display (set to "" for disable).
+ZSH_COMMAND_TIME_MSG="Execution time: %s sec"
 
-# when you copy master.zshrc to ~/.zshrc you don't have to actually keep
-#   the remainder of these lines (since they are pulled in by sourcing
-#   master.zshrc), though you can (doing them twice is harmless and adds
-#   negilble time to the loading of the shell)
-# instead you can start making your personal modifications
+# Message color.
+ZSH_COMMAND_TIME_COLOR="cyan"
 
-export LOCAL_ADMIN_SCRIPTS='/usr/facebook/ops/rc'
-if [[ -z "$ADMIN_SCRIPTS" ]]; then
-  export ADMIN_SCRIPTS="$LOCAL_ADMIN_SCRIPTS"
-fi
-
-# things that work in more than just zsh
-source "$LOCAL_ADMIN_SCRIPTS"/master.shellrc
-
-# zsh-specific things below
-
-# load zsh completions
-fpath=($fpath "$LOCAL_ADMIN_SCRIPTS/zsh-completion")
-
-# Load and run completion initialization
-autoload -U compinit
-compinit -i
-
-# Enable bash completion for select commands
-autoload -U bashcompinit
-bashcompinit -i
-for f in \
-  arcanist \
-  bistrocli \
-  fbconfig \
-  fbmake \
-  mlcli \
-  mlsweeper \
-  smcc \
-; do
-  source "$LOCAL_ADMIN_SCRIPTS/bash-completion/$f"
-done
-
-# Add error code/signal names when a program exits in error (from shellrc)
-if test "$ADD_ERRORCODE_TO_PROMPT"; then
-   if test "$NO_ERRORCODE_PROMPT" != 1; then
-      precmd_functions+=(_errorcode_prompt)
-   fi
-fi
-
-# More goodness here..
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

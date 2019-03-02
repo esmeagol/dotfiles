@@ -9,19 +9,23 @@ set ttyfast                 " Faster redrawing
 set lazyredraw              " Only redraw when necessary
 set cursorline              " Find the current line quickly.
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins List
 """""""""""""""""""""""""""""""""""""""""""""""
-
-call plug#begin()
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin('~/.vim/autoload')
 
 " Async FuzzyFind
+set rtp+=/usr/local/opt/fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
 " NERDTree
+"Plug 'vbundles/nerdtree'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 call plug#end()
@@ -31,7 +35,7 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""
 
 " Open NERDTree automatically when vim starts up
-" autocmd vimenter * NERDTree
+autocmd vimenter * NERDTree
 " NERDTree
 let NERDTreeShowHidden=1
 map <silent> <C-n> :NERDTreeToggle<CR>
@@ -46,9 +50,6 @@ let g:NERDTreeQuitOnOpen=1
 
 " 256 colors
 set t_Co=256
-
-" set colorscheme
-colorscheme nord
 
 " long lines as just one line (have to scroll horizontally)
 set nowrap
@@ -70,7 +71,6 @@ set guioptions-=r
 set guioptions-=R
 set guioptions-=l
 set guioptions-=L
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""
